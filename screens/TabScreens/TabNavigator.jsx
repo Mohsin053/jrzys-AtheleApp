@@ -1,124 +1,72 @@
-import { View, TouchableWithoutFeedback } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useContext } from 'react';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View, StyleSheet } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeScreen from './HomeScreen';
-import SearchMainScreen from './SearchMainScreen';
-import NewsJobsScreen from './NewsJobsScreen';
-import ProfileHomeScreen from './ProfileHomeScreen';
+import HomeScreen from "./HomeScreen";
+import EventsScreen from "./EventsScreen";
+import ProfileScreen from "./ProfileScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
 
+const CircleTabBarIcon = ({ name, size, color }) => {
+  return (
+    <View style={[styles.circleContainer, { backgroundColor: color }]}>
+      <Ionicons name={name} size={size} color="#FFFFFF" />
+    </View>
+  );
+};
+
 export default function TabNavigator() {
-	return (
-		<Tab.Navigator
-			screenOptions={{
-				tabBarStyle: {
-					height: 60,
-					backgroundColor: '#F5F5F5',
-				},
-				headerShown: false,
-				tabBarActiveTintColor: '#FF8216',
-				tabBarLabelStyle: { fontSize: 12, paddingBottom: 5 },
-			}}>
-			<Tab.Screen
-				name='Home'
-				component={HomeScreen}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name={'home'} color={color} size={size} />
-					),
-				}}
-			/>
-			<Tab.Screen
-				name='Search'
-				component={SearchMainScreen}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name={'search'} color={color} size={size} />
-					),
-				}}
-			/>
-			<Tab.Screen
-				name='Homesc'
-				component={HomeScreen}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name={'videocam'} color={color} size={size} />
-					),
-					tabBarButton: () => <MiddleTabBarButton />,
-				}}
-			/>
-			<Tab.Screen
-				name='News+'
-				component={NewsJobsScreen}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons
-							name={'newspaper'}
-							color={color}
-							size={size}
-						/>
-					),
-				}}
-			/>
-			<Tab.Screen
-				name='Profile'
-				component={ProfileHomeScreen}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name={'person'} color={color} size={size} />
-					),
-				}}
-			/>
-		</Tab.Navigator>
-	);
+  return (
+    <SafeAreaView style={styles.container}>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ size, color }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = "home-outline";
+            } else if (route.name === "Events") {
+              iconName = "notifications-outline";
+            } else if (route.name === "Profile") {
+              iconName = "person-outline";
+            }
+
+            return (
+              <CircleTabBarIcon name={iconName} size={size} color={color} />
+            );
+          },
+          tabBarStyle: {
+            height: 75,
+            backgroundColor: "#FFFFFF",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          headerShown: false,
+          tabBarActiveTintColor: "#E45353",
+          tabBarInactiveTintColor: "#BBBBBB",
+          tabBarShowLabel: false,
+        })}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Events" component={EventsScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </SafeAreaView>
+  );
 }
 
-const MiddleTabBarButton = () => {
-	const navigation = useNavigation();
-	return (
-		<TouchableWithoutFeedback
-			onPress={() => {
-				navigation.navigate('CameraRecording', { text: '' });
-			}}>
-			<View
-				style={{
-					top: -20,
-					height: 70,
-					width: 70,
-					borderRadius: 50,
-					backgroundColor: '#FF8216',
-					justifyContent: 'center',
-					alignItems: 'center',
-					borderColor: '#000000',
-					elevation: 5,
-				}}>
-				<Ionicons name='videocam' color='white' size={25} />
-			</View>
-		</TouchableWithoutFeedback>
-	);
-};
-
-const options1 = {
-	tabBarStyle: {
-		height: 60,
-		backgroundColor: '#F5F5F5',
-	},
-	headerShown: false,
-	tabBarActiveTintColor: '#FF8216',
-	tabBarLabelStyle: { fontSize: 12, paddingBottom: 5 },
-};
-
-const options2 = {
-	tabBarStyle: {
-		height: 60,
-		backgroundColor: '#F5F5F5',
-	},
-	headerShown: false,
-	tabBarActiveTintColor: '#FF8216',
-	tabBarLabelStyle: { fontSize: 12, paddingBottom: 5 },
-	tabBarStyle: { display: 'none' },
-};
+const styles = StyleSheet.create({
+  circleContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    position: "relative",
+  },
+});

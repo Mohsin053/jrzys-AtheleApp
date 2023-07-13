@@ -9,21 +9,10 @@ import Loader from '../components/Loader';
 import { UserProvider } from '../context/UserContext';
 
 const AppNav = () => {
-	const { loading, user } = useContext(AuthContext);
-
-	if (loading) {
-		return <Loader />;
-	}
 	return (
 		<>
 			<NavigationContainer>
-				{user !== null ? (
-					<UserProvider>
-						<MainStack />
-					</UserProvider>
-				) : (
-					<AuthStack />
-				)}
+				<MainStack />
 			</NavigationContainer>
 			<Toast />
 			<Toast />

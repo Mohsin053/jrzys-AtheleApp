@@ -1,43 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  Image,
   FlatList,
 } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Picker } from "@react-native-picker/picker";
 import LinearGradient from 'react-native-linear-gradient';
+
 const data = [
   { id: "1", name: "doja", state: "DE" },
   { id: "2", name: "doja", state: "EN" },
   { id: "3", name: "doja", state: "EN" },
-  { id: "4", name: "doja", state: "EN" },
-  { id: "5", name: "doja", state: "EN" },
-  { id: "6", name: "doja", state: "EN" },
-  { id: "7", name: "doja", state: "EN" },
 ];
 
-export default function HomeScreen({ navigation }) {
-  const img1 = require("../../assets/salvabot_logo.png");
+export default function EventScreen({ navigation }) {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
 
   const ListFooterComponent = () => (
     <SafeAreaView>
       <View style={styles.uppertab}>
         <View style={styles.innertab}>
-          <View>
-            <Text style={styles.text2}>Bienvenido de nuevo</Text>
-            <Text style={styles.text1}>Abdalá Mamun</Text>
-          </View>
-          <Image source={img1} style={styles.img}></Image>
+          <Picker
+            selectedValue={selectedOption}
+            onValueChange={handleOptionChange}
+            style={styles.picker}
+            dropdownIconColor={"black"}
+          >
+            <Picker.Item label="Filtrar por botones" value="" />
+            <Picker.Item label="Option 1" value="option1" />
+            <Picker.Item label="Option 2" value="option2" />
+            <Picker.Item label="Option 3" value="option3" />
+          </Picker>
         </View>
       </View>
-      <TouchableOpacity style={styles.buttontab}>
-        <Text style={styles.buttontext}>Prensa 2 segundos</Text>
-      </TouchableOpacity>
-      <Text style={styles.text3}>En custodia</Text>
-
+      <View style={{ width: "90%", alignSelf: "center" }}>
+        <Text style={styles.text3}>Eventos</Text>
+      </View>
       <FlatList
         style={styles.list1}
         data={data}
@@ -48,7 +54,10 @@ export default function HomeScreen({ navigation }) {
   );
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={[styles.button11]} onPress={() => navigation.navigate('SecondaryScreen')}>
+    <TouchableOpacity
+      style={[styles.button11]}
+      onPress={() => navigation.navigate("EventInfoScreen")}
+    >
       <View style={{ width: "25%" }}>
         <View style={styles.buttonround}></View>
       </View>
@@ -56,14 +65,12 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.text12}>{item.name}</Text>
       </View>
       <View style={{ width: "20%" }}>
-        <Text
-          style={[
-            styles.text13,
-            { color: item.state === "EN" ? "#49D408" : "gray" },
-          ]}
-        >
-          {item.state}
-        </Text>
+        <Ionicons
+          name="chevron-forward"
+          color={"#677294"}
+          size={25}
+          style={{ alignSelf: "center" }}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -73,14 +80,13 @@ export default function HomeScreen({ navigation }) {
         colors={['#FCDD47', '#F9F8F8', '#F9F8F8', '#FCDD47']}
         locations={[0, 0.3, 0.7, 1]}
         start={{ x: -0.3, y: 0 }}
-        end={{ x: 1.3, y: 1 }}
+        end={{ x: 1.5, y: 1 }}
         style={{flex:1}}
       >
     <FlatList
       data={[]}
       renderItem={() => null}
       ListFooterComponent={ListFooterComponent}
-      
     />
     </LinearGradient>
   );
@@ -88,63 +94,28 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   uppertab: {
-    height: 150,
-    backgroundColor: "#D52C2C",
-    alignItems: "center",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  innertab: {
-    width: "95%",
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 5,
-  },
-  img: {
-    height: 60,
-    width: 60,
-  },
-  text1: {
-    fontWeight: "bold",
-    color: "white",
-    fontSize: 25,
-  },
-  text2: {
-    fontWeight: "light",
-    color: "white",
-    fontSize: 20,
-  },
-  text3: {
-    fontWeight: "medium",
-    color: "black",
-    fontSize: 25,
-    alignSelf: "center",
-    marginBottom: 20,
-  },
-  buttontext: {
-    fontWeight: "medium",
-    color: "white",
-    fontSize: 20,
-    padding: 5,
-  },
-  buttontab: {
-    height: 180,
-    width: 180,
-    backgroundColor: "#D52C2C",
-    marginTop: 20,
-    marginBottom: 20,
+    height: 140,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "center",
-    borderRadius: 100,
-    elevation: 10,
+  },
+  innertab: {
+    elevation: 5,
+    width: "90%",
+    height: 60,
+    borderRadius: 15,
+    backgroundColor: "#F5F9FF",
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-
+  },
+  text3: {
+    fontWeight: "bold",
+    color: "black",
+    fontSize: 25,
+    marginBottom: 20,
   },
   buttonround: {
     height: 30,
@@ -157,10 +128,6 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "regular",
     fontSize: 20,
-  },
-  text13: {
-    fontWeight: "regular",
-    fontSize: 18,
   },
   button11: {
     flexDirection: "row",
@@ -182,6 +149,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-
+  },
+  picker: {
+    width: "90%",
+    color: "#788190",
+    backgroundColor: "#F5F9FF",
   },
 });

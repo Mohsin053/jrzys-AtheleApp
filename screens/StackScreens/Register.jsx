@@ -3,11 +3,11 @@ import LinearGradient from 'react-native-linear-gradient'
 const Register = ({ navigation }) => {
   return (
     <LinearGradient
-        colors={['yellow', 'white']}
+        colors={['#FCDD47', '#F9F8F8', '#F9F8F8', '#FCDD47']}
+        locations={[0, 0.3, 0.7, 1]}
+        start={{ x: -0.3, y: 0 }}
+        end={{ x: 1.3, y: 1 }}
         style={styles.scrollview}
-        start={{ x: -3, y: -3 }}
-        end={{ x: 0, y: 1 }}
-        
       >
       <View style={styles.imgview}>
         <Image
