@@ -44,7 +44,7 @@ const SecondaryScreen = ({navigation}) => {
             </View>
           </View>
           <View>
-            <Ionicons name="chevron-back" color={"white"} size={30} />
+            <Ionicons name="chevron-back" color={"transparent"} size={30} />
           </View>
         </View>
       </View>
