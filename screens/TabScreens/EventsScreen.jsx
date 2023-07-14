@@ -6,9 +6,10 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
+  TouchableWithoutFeedback,
+  Modal
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Picker } from "@react-native-picker/picker";
 import LinearGradient from 'react-native-linear-gradient';
 
 const data = [
@@ -18,29 +19,66 @@ const data = [
 ];
 
 export default function EventScreen({ navigation }) {
-  const [selectedOption, setSelectedOption] = useState("");
 
-  const handleOptionChange = (option) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const options = [
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ];
+
+  const handleOptionPress = (option) => {
     setSelectedOption(option);
+    setModalVisible(false);
   };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
 
   const ListFooterComponent = () => (
     <SafeAreaView>
       <View style={styles.uppertab}>
-        <View style={styles.innertab}>
-          <Picker
-            selectedValue={selectedOption}
-            onValueChange={handleOptionChange}
-            style={styles.picker}
-            dropdownIconColor={"black"}
+          <TouchableWithoutFeedback
+            onPress={() => setModalVisible(true)}
           >
-            <Picker.Item label="Filtrar por botones" value="" />
-            <Picker.Item label="Option 1" value="option1" />
-            <Picker.Item label="Option 2" value="option2" />
-            <Picker.Item label="Option 3" value="option3" />
-          </Picker>
-        </View>
+            <View style={styles.innertab}>
+            
+              {selectedOption ? (
+                <Text style={styles.selectedOptionText}>
+                  {selectedOption.label}
+                </Text>
+              ) : (
+                <Text style={styles.placeholderText}>Filtrar por botones</Text>
+              )}
+              <Ionicons name="chevron-down-outline" size={20} color="#788190" />
+            
+            </View>
+          </TouchableWithoutFeedback>
+
+          <Modal visible={modalVisible} transparent animationType="fade">
+            <TouchableWithoutFeedback onPress={closeModal}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modal}>
+                  {options.map((option) => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={styles.optionItem}
+                      onPress={() => handleOptionPress(option)}
+                    >
+                      <Text style={styles.optionText}>{option.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+        
       </View>
+
       <View style={{ width: "90%", alignSelf: "center" }}>
         <Text style={styles.text3}>Eventos</Text>
       </View>
@@ -110,6 +148,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+    flexDirection: "row",
+    padding:15
   },
   text3: {
     fontWeight: "bold",
@@ -150,9 +190,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
-  picker: {
-    width: "90%",
-    color: "#788190",
-    backgroundColor: "#F5F9FF",
+ 
+  selectedOptionText: {
+    flex: 1,
+    marginRight: 10,
+    color:'#788190'
+  },
+  placeholderText: {
+    flex: 1,
+    color: '#788190',
+  },
+
+  optionItem: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  optionText: {
+    fontSize: 16,
+    color:'#788190'
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
   },
 });
