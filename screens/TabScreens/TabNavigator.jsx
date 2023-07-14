@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,Platform } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeScreen from "./HomeScreen";
@@ -42,6 +42,11 @@ export default function TabNavigator() {
             backgroundColor: "#FFFFFF",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
+            ...Platform.select({
+              ios: {
+                paddingBottom: 0, // Remove bottom padding for iOS
+              },
+            }),
           },
           headerShown: false,
           tabBarActiveTintColor: "#E45353",

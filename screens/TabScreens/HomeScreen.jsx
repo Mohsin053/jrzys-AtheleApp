@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import {
   Text,
   View,
@@ -10,17 +10,18 @@ import {
 } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 const data = [
-  { id: "1", name: "doja", state: "DE" },
-  { id: "2", name: "doja", state: "EN" },
-  { id: "3", name: "doja", state: "EN" },
-  { id: "4", name: "doja", state: "EN" },
-  { id: "5", name: "doja", state: "EN" },
-  { id: "6", name: "doja", state: "EN" },
-  { id: "7", name: "doja", state: "EN" },
+  { id: "1", name: "VPN", state: "DE" },
+  { id: "2", name: "VPN", state: "EN" },
+  { id: "3", name: "VPN", state: "EN" },
+  { id: "4", name: "VPN", state: "EN" },
+  { id: "5", name: "VPN", state: "EN" },
+  { id: "6", name: "VPN", state: "EN" },
+  { id: "7", name: "VPN", state: "EN" },
 ];
 
 export default function HomeScreen({ navigation }) {
   const img1 = require("../../assets/salvabot_logo.png");
+  const [name, setname] = useState("Abdalá Mamun");
 
   const ListFooterComponent = () => (
     <SafeAreaView>
@@ -28,7 +29,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.innertab}>
           <View>
             <Text style={styles.text2}>Bienvenido de nuevo</Text>
-            <Text style={styles.text1}>Abdalá Mamun</Text>
+            <Text style={styles.text1}>{name}</Text>
           </View>
           <Image source={img1} style={styles.img}></Image>
         </View>

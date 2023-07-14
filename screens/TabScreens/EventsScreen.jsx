@@ -12,9 +12,9 @@ import { Picker } from "@react-native-picker/picker";
 import LinearGradient from 'react-native-linear-gradient';
 
 const data = [
-  { id: "1", name: "doja", state: "DE" },
-  { id: "2", name: "doja", state: "EN" },
-  { id: "3", name: "doja", state: "EN" },
+  { id: "1", name: "VPN", state: "DE" },
+  { id: "2", name: "VPN", state: "EN" },
+  { id: "3", name: "VPN", state: "EN" },
 ];
 
 export default function EventScreen({ navigation }) {
