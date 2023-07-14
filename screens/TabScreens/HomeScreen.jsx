@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect,useRef } from "react";
 import {
   Text,
   View,
@@ -24,20 +24,22 @@ export default function HomeScreen({ navigation }) {
   const img1 = require("../../assets/salvabot_logo.png");
   const [name, setname] = useState("Abdalá Mamun");
   const [isPressing, setIsPressing] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const timeoutRef = useRef(null);
 
   const handlePressIn = () => {
-    setIsPressing(true);
-    setTimeout(showPopup, 2000); // Set the desired duration in milliseconds
+    timeoutRef.current = setTimeout(() => {
+      setShowPopup(true);
+    }, 2000);
   };
 
   const handlePressOut = () => {
-    setIsPressing(false);
+    clearTimeout(timeoutRef.current);
+    setShowPopup(false);
   };
 
-  const showPopup = () => {
-    if (isPressing) {
-      Alert.alert("Popup", "Button pressed for 2 seconds!");
-    }
+  const handlePopupDismiss = () => {
+    setShowPopup(false);
   };
 
   const ListFooterComponent = () => (
@@ -57,6 +59,9 @@ export default function HomeScreen({ navigation }) {
         onPressOut={handlePressOut}>
         <Text style={styles.buttontext}>Prensa 2 segundos</Text>
       </TouchableOpacity>
+      {showPopup && (
+        Alert.alert("Popup", "Button pressed for 2 seconds!")
+      )}
       <Text style={styles.text3}>En custodia</Text>
 
       <FlatList
