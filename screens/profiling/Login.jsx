@@ -12,66 +12,73 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Formik } from "formik";
-
+import LinearGradient from "react-native-linear-gradient";
 import loginValidationSchema from "../../utils/validations/loginValidation";
 import url from "../../utils/url.js";
 import { getFCM } from "../../utils/pushNotifications";
 import { AuthContext } from "../../auth/AuthContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Login = () => {
+const Login = ({navigation}) => {
   const { logIn } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    const token = await getFCM();
-    const opts1 = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: values.username,
-        password: values.password,
-      }),
-    };
-    const res1 = await fetch(`${url}/users/login`, opts1);
-    if (!res1.ok) {
-      setLoading(false);
-      setError("Invalid Username or Password.");
-      setInterval(() => {
-        setError("");
-      }, 10000);
-    } else {
-      const data = await res1.json();
-      const opts2 = {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${data.token}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-        }),
-      };
-      const res2 = await fetch(`${url}/users/fcm`, opts2);
-      if (res2.ok) {
-        logIn(data.token);
-      } else {
-        setLoading(false);
-        setError("Something went Wrong");
-        setInterval(() => {
-          setError("");
-        }, 10000);
-      }
-    }
-  };
+  // const handleSubmit = async (values) => {
+  //   setLoading(true);
+  //   const token = await getFCM();
+  //   const opts1 = {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: values.username,
+  //       password: values.password,
+  //     }),
+  //   };
+  //   const res1 = await fetch(`${url}/users/login`, opts1);
+  //   if (!res1.ok) {
+  //     setLoading(false);
+  //     setError("Invalid Username or Password.");
+  //     setInterval(() => {
+  //       setError("");
+  //     }, 10000);
+  //   } else {
+  //     const data = await res1.json();
+  //     const opts2 = {
+  //       method: "PATCH",
+  //       headers: {
+  //         Authorization: `Bearer ${data.token}`,
+  //         "Content-type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         token: token,
+  //       }),
+  //     };
+  //     const res2 = await fetch(`${url}/users/fcm`, opts2);
+  //     if (res2.ok) {
+  //       logIn(data.token);
+  //     } else {
+  //       setLoading(false);
+  //       setError("Something went Wrong");
+  //       setInterval(() => {
+  //         setError("");
+  //       }, 10000);
+  //     }
+  //   }
+  // };
 
   return (
-    <ScrollView style={styles.scrollview}>
+    <LinearGradient
+      colors={["#FCDD47", "#F9F8F8", "#F9F8F8", "#FCDD47"]}
+      locations={[0, 0.3, 0.7, 1]}
+      start={{ x: -0.3, y: 0 }}
+      end={{ x: 1.5, y: 1 }}
+      style={{ flex: 1 }}
+    >
+    <ScrollView>
       <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
@@ -144,7 +151,7 @@ const Login = () => {
 
                   <TouchableOpacity
                     style={[styles.touchsign]}
-                    onPress={handleSubmit}
+                    onPress={() => navigation.navigate("TabNavigator")}
                     disabled={
                       !isValid ||
                       values.password === "" ||
@@ -179,14 +186,11 @@ const Login = () => {
       </TouchableWithoutFeedback>
       </SafeAreaView>
     </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollview: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   mainview: {
     padding: "3%",
   },

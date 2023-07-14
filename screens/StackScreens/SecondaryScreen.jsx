@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
+  Linking
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Switch } from 'react-native-paper';
@@ -21,8 +22,14 @@ const SecondaryScreen = ({navigation}) => {
     docId: 3514077,
     bloodType: " Grupo A ",
     phoneNumber: "+8801800000000",
+    phoneNumber1: "+8801800000001",
     address: "121 Hamilton street, London",
   });
+
+  const handleDialButtonPress = (number) => {
+    Linking.openURL(`tel:${number}`);
+  };
+
   return (
     <LinearGradient
         colors={['#FCDD47', '#F9F8F8', '#F9F8F8', '#FCDD47']}
@@ -119,46 +126,46 @@ const SecondaryScreen = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.shadowbar} >
-        <View style={[styles.button11, { height: 30 }]}>
-          <View style={{ width: "40%" }}>
-            <Text style={styles.text12}>Número de teléfono</Text>
+      <View style={styles.shadowbar}>
+          <View style={[styles.button11, { height: 30 }]}>
+            <View style={{ width: "40%" }}>
+              <Text style={styles.text12}>Número de teléfono</Text>
+            </View>
+            <View style={{ width: "40%" }}></View>
           </View>
-          <View style={{ width: "40%" }}></View>
+          <TouchableOpacity style={[styles.button11, { height: 30 }]} onPress={() => handleDialButtonPress(userInfo.phoneNumber)}>
+            <View style={{ width: "60%", flexDirection: "row" }}>
+              <Ionicons
+                name="call"
+                color={"#677294"}
+                size={20}
+                style={{ alignSelf: "center" }}
+              />
+              <Text style={[styles.text14, { marginLeft: 10 }]}>
+                {userInfo.phoneNumber}
+              </Text>
+            </View>
+            <View style={{ width: "20%" }}>
+              <Text style={styles.text13}>(Principal)</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button11, { height: 30 }]} onPress={() => handleDialButtonPress(userInfo.phoneNumber1)}>
+            <View style={{ width: "55%", flexDirection: "row" }}>
+              <Ionicons
+                name="call"
+                color={"#677294"}
+                size={20}
+                style={{ alignSelf: "center" }}
+              />
+              <Text style={[styles.text14, { marginLeft: 10 }]}>
+                {userInfo.phoneNumber1}
+              </Text>
+            </View>
+            <View style={{ width: "25%" }}>
+              <Text style={styles.text13}>(Emergencia)</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={[styles.button11, { height: 30 }]}>
-          <View style={{ width: "60%", flexDirection: "row" }}>
-            <Ionicons
-              name="call"
-              color={"#677294"}
-              size={20}
-              style={{ alignSelf: "center" }}
-            />
-            <Text style={[styles.text14, { marginLeft: 10 }]}>
-              {userInfo.phoneNumber}
-            </Text>
-          </View>
-          <View style={{ width: "20%" }}>
-            <Text style={styles.text13}>(Principal)</Text>
-          </View>
-        </View>
-        <View style={[styles.button11, { height: 30 }]}>
-          <View style={{ width: "55%", flexDirection: "row" }}>
-            <Ionicons
-              name="call"
-              color={"#677294"}
-              size={20}
-              style={{ alignSelf: "center" }}
-            />
-            <Text style={[styles.text14, { marginLeft: 10 }]}>
-              {userInfo.phoneNumber}
-            </Text>
-          </View>
-          <View style={{ width: "25%" }}>
-            <Text style={styles.text13}>(Emergencia)</Text>
-          </View>
-        </View>
-      </View>
 
       <View style={styles.shadowbar} >
         <View style={[styles.button11, { height: 30 }]}>

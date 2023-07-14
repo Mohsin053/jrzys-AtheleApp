@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   ScrollView,
   SafeAreaView,
+  Linking 
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,9 +21,13 @@ const ProfileScreen = ({ navigation }) => {
     docId: 3514077,
     bloodType: " Grupo A ",
     phoneNumber: "+8801800000000",
+    phoneNumber1: "+8801800000001",
     address: "121 Hamilton street, London",
   });
 
+  const handleDialButtonPress = (number) => {
+    Linking.openURL(`tel:${number}`);
+  };
   return (
     <LinearGradient
         colors={['#FCDD47', '#F9F8F8', '#F9F8F8', '#FCDD47']}
@@ -102,7 +107,7 @@ const ProfileScreen = ({ navigation }) => {
             </View>
             <View style={{ width: "40%" }}></View>
           </View>
-          <View style={[styles.button11, { height: 30 }]}>
+          <TouchableOpacity style={[styles.button11, { height: 30 }]} onPress={() => handleDialButtonPress(userInfo.phoneNumber)}>
             <View style={{ width: "60%", flexDirection: "row" }}>
               <Ionicons
                 name="call"
@@ -117,8 +122,8 @@ const ProfileScreen = ({ navigation }) => {
             <View style={{ width: "20%" }}>
               <Text style={styles.text13}>(Principal)</Text>
             </View>
-          </View>
-          <View style={[styles.button11, { height: 30 }]}>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button11, { height: 30 }]} onPress={() => handleDialButtonPress(userInfo.phoneNumber1)}>
             <View style={{ width: "55%", flexDirection: "row" }}>
               <Ionicons
                 name="call"
@@ -127,13 +132,13 @@ const ProfileScreen = ({ navigation }) => {
                 style={{ alignSelf: "center" }}
               />
               <Text style={[styles.text14, { marginLeft: 10 }]}>
-                {userInfo.phoneNumber}
+                {userInfo.phoneNumber1}
               </Text>
             </View>
             <View style={{ width: "25%" }}>
               <Text style={styles.text13}>(Emergencia)</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.shadowbar}>
@@ -177,7 +182,7 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={[styles.touchsign]}>
+        <TouchableOpacity style={[styles.touchsign]} onPress={() => navigation.navigate('Login')}>
           {loading ? (
             <ActivityIndicator size="small" color="#ffffff" />
           ) : (

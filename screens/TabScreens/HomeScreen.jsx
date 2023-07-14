@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Image,
   FlatList,
+  Alert
 } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 const data = [
@@ -22,6 +23,22 @@ const data = [
 export default function HomeScreen({ navigation }) {
   const img1 = require("../../assets/salvabot_logo.png");
   const [name, setname] = useState("Abdalá Mamun");
+  const [isPressing, setIsPressing] = useState(false);
+
+  const handlePressIn = () => {
+    setIsPressing(true);
+    setTimeout(showPopup, 2000); // Set the desired duration in milliseconds
+  };
+
+  const handlePressOut = () => {
+    setIsPressing(false);
+  };
+
+  const showPopup = () => {
+    if (isPressing) {
+      Alert.alert("Popup", "Button pressed for 2 seconds!");
+    }
+  };
 
   const ListFooterComponent = () => (
     <SafeAreaView>
@@ -31,10 +48,13 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.text2}>Bienvenido de nuevo</Text>
             <Text style={styles.text1}>{name}</Text>
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen1')}>
           <Image source={img1} style={styles.img}></Image>
+          </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.buttontab}>
+      <TouchableOpacity style={styles.buttontab} onPressIn={handlePressIn}
+        onPressOut={handlePressOut}>
         <Text style={styles.buttontext}>Prensa 2 segundos</Text>
       </TouchableOpacity>
       <Text style={styles.text3}>En custodia</Text>
