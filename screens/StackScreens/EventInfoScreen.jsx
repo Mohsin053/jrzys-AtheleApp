@@ -17,7 +17,7 @@ const EventInfoScreen = ({ navigation }) => {
     date: "2023/7/7",
     action: "3514077",
     actor: "akakak",
-    location: "121 Hamilton street, London",
+    address: "121 Hamilton Road, London, UK",
   });
   return (
     <LinearGradient
@@ -89,10 +89,12 @@ const EventInfoScreen = ({ navigation }) => {
           </View>
           <TouchableOpacity
             style={[styles.button11, { height: 30 }]}
-            onPress={() => navigation.navigate("MapScreen")}
+            onPress={() => navigation.navigate('MapScreen',{
+              itemId: userInfo.address,
+            })}
           >
             <View style={{ width: "70%" }}>
-              <Text style={styles.text14}>{userInfo.location}</Text>
+              <Text style={styles.text14}>{userInfo.address}</Text>
             </View>
             <View style={{ width: "10%" }}>
               <Ionicons

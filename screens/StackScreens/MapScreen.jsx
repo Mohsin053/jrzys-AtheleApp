@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet,TouchableOpacity,Text} from 'react-native';
+import React from 'react';
+import { View, StyleSheet,TouchableOpacity,Text} from 'react-native';
 import { WebView } from 'react-native-webview';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const Test = ({navigation}) => {
-  const [address, setAddress] = useState('');
-  const [mapUrl, setMapUrl] = useState(null);
-
+const Test = ({navigation,route}) => {
+  const { itemId } = route.params;
   return (
     <View style={styles.container}>
       <View style={styles.uppertab}>
@@ -26,7 +24,7 @@ const Test = ({navigation}) => {
         </View>
         <WebView
           style={styles.map}
-          source={{ uri: 'https://www.google.com/maps/search/?api=1&query=121 Hamilton street, London' }}
+          source={{ uri: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(itemId)}` }}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           startInLoadingState={true}

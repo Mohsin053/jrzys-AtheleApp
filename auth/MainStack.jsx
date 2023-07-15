@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from '../screens/profiling/Login';
-import Test from '../screens/profiling/Test';
 import TabNavigator from '../screens/TabScreens/TabNavigator';
 import MapScreen from '../screens/StackScreens/MapScreen';
 import EventInfoScreen from '../screens/StackScreens/EventInfoScreen';
@@ -22,7 +21,6 @@ const MainStack = () => {
 			<Stack.Screen name='SecondaryScreen' component={SecondaryScreen} />
 			<Stack.Screen name='MapScreen' component={MapScreen} />
 			<Stack.Screen name='ProfileScreen1' component={ProfileScreen1} />
-			
 		</Stack.Navigator>
 	);
 };

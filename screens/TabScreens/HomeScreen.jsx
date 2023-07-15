@@ -7,7 +7,8 @@ import {
   SafeAreaView,
   Image,
   FlatList,
-  Alert
+  Modal,
+  Button
 } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 const data = [
@@ -23,19 +24,17 @@ const data = [
 export default function HomeScreen({ navigation }) {
   const img1 = require("../../assets/salvabot_logo.png");
   const [name, setname] = useState("Abdalá Mamun");
-  const [isPressing, setIsPressing] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const timeoutRef = useRef(null);
 
   const handlePressIn = () => {
     timeoutRef.current = setTimeout(() => {
       setShowPopup(true);
-    }, 2000);
+    }, 1000);
   };
 
   const handlePressOut = () => {
-    clearTimeout(timeoutRef.current);
-    setShowPopup(false);
+    clearTimeout(timeoutRef.current); 
   };
 
   const handlePopupDismiss = () => {
@@ -59,9 +58,15 @@ export default function HomeScreen({ navigation }) {
         onPressOut={handlePressOut}>
         <Text style={styles.buttontext}>Prensa 2 segundos</Text>
       </TouchableOpacity>
-      {showPopup && (
-        Alert.alert("Popup", "Button pressed for 2 seconds!")
-      )}
+      <Modal visible={showPopup} transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.popupContainer}>
+            <Text style={styles.popupText}>Modo activado</Text>
+            <Button title="Ok" onPress={handlePopupDismiss} color={'#D52C2C'}/>
+          </View>
+        </View>
+      </Modal>
+
       <Text style={styles.text3}>En custodia</Text>
 
       <FlatList
@@ -70,6 +75,7 @@ export default function HomeScreen({ navigation }) {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      
     </SafeAreaView>
   );
 
@@ -209,5 +215,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
 
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  popupContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 8,
+    elevation: 5,
+  },
+  popupText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color:'black'
   },
 });

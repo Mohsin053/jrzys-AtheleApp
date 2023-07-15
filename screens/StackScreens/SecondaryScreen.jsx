@@ -23,7 +23,7 @@ const SecondaryScreen = ({navigation}) => {
     bloodType: " Grupo A ",
     phoneNumber: "+8801800000000",
     phoneNumber1: "+8801800000001",
-    address: "121 Hamilton street, London",
+    address: "121 Hamilton Road, London, UK",
   });
 
   const handleDialButtonPress = (number) => {
@@ -167,46 +167,50 @@ const SecondaryScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
 
-      <View style={styles.shadowbar} >
-        <View style={[styles.button11, { height: 30 }]}>
-          <View style={{ width: "40%" }}>
-            <Text style={styles.text12}>Dirección</Text>
+        <View style={styles.shadowbar}>
+          <View style={[styles.button11, { height: 30 }]}>
+            <View style={{ width: "40%" }}>
+              <Text style={styles.text12}>Dirección</Text>
+            </View>
+            <View style={{ width: "40%" }}></View>
           </View>
-          <View style={{ width: "40%" }}></View>
+          <TouchableOpacity
+            style={[styles.button11, { height: 30 }]}
+            onPress={() => navigation.navigate('MapScreen',{
+              itemId: userInfo.address,
+            })}
+          >
+            <View style={{ width: "70%" }}>
+              <Text style={styles.text14}>{userInfo.address}</Text>
+            </View>
+            <View style={{ width: "10%" }}>
+              <Ionicons
+                name="chevron-forward"
+                color={"#677294"}
+                size={20}
+                style={{ alignSelf: "center" }}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button11, { height: 30 }]}
+            onPress={() => navigation.navigate('MapScreen',{
+              itemId: userInfo.address,
+            })}
+          >
+            <View style={{ width: "70%" }}>
+              <Text style={styles.text14}>{userInfo.address}</Text>
+            </View>
+            <View style={{ width: "10%" }}>
+              <Ionicons
+                name="chevron-forward"
+                color={"#677294"}
+                size={20}
+                style={{ alignSelf: "center" }}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={[styles.button11, { height: 30 }]}
-          onPress={() => navigation.navigate("MapScreen")}
-        >
-          <View style={{ width: "70%" }}>
-            <Text style={styles.text14}>{userInfo.address}</Text>
-          </View>
-          <View style={{ width: "10%" }}>
-            <Ionicons
-              name="chevron-forward"
-              color={"#677294"}
-              size={20}
-              style={{ alignSelf: "center" }}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button11, { height: 30 }]}
-          onPress={() => navigation.navigate("MapScreen")}
-        >
-          <View style={{ width: "70%" }}>
-            <Text style={styles.text14}>{userInfo.address}</Text>
-          </View>
-          <View style={{ width: "10%" }}>
-            <Ionicons
-              name="chevron-forward"
-              color={"#677294"}
-              size={20}
-              style={{ alignSelf: "center" }}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
       </SafeAreaView>
     </ScrollView>
     </LinearGradient>

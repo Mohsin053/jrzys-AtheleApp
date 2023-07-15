@@ -22,7 +22,7 @@ const ProfileScreen = ({ navigation }) => {
     bloodType: " Grupo A ",
     phoneNumber: "+8801800000000",
     phoneNumber1: "+8801800000001",
-    address: "121 Hamilton street, London",
+    address: "121 Hamilton Road, London, UK",
   });
 
   const handleDialButtonPress = (number) => {
@@ -150,7 +150,9 @@ const ProfileScreen = ({ navigation }) => {
           </View>
           <TouchableOpacity
             style={[styles.button11, { height: 30 }]}
-            onPress={() => navigation.navigate("MapScreen")}
+            onPress={() => navigation.navigate('MapScreen',{
+              itemId: userInfo.address,
+            })}
           >
             <View style={{ width: "70%" }}>
               <Text style={styles.text14}>{userInfo.address}</Text>
@@ -166,7 +168,9 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button11, { height: 30 }]}
-            onPress={() => navigation.navigate("MapScreen")}
+            onPress={() => navigation.navigate('MapScreen',{
+              itemId: userInfo.address,
+            })}
           >
             <View style={{ width: "70%" }}>
               <Text style={styles.text14}>{userInfo.address}</Text>
